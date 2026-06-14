@@ -17,6 +17,9 @@ def parse_args(args: list[str]) -> dict[str, int]:
         except ValueError as e:
             print(f"Quantity error for '{name}': {e}")
             continue
+        if qty <= 0:
+            print(f"Quantity error for '{name}': must be greater than zero")
+            continue
         inventory.update({name: qty})
     return inventory
 
@@ -50,7 +53,10 @@ def main() -> None:
     print(f"Item most abundant: {most} with quantity {inventory[most]}")
     print(f"Item least abundant: {least} with quantity {inventory[least]}")
 
-    inventory.update({'magic_item': 1})
+    new_item = 'magic_item'
+    if new_item in inventory:
+        new_item = 'bonus_item'
+    inventory.update({new_item: 1})
     print(f"Updated inventory: {inventory}")
 
 

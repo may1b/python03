@@ -9,7 +9,7 @@ def main() -> None:
         try:
             arg_val = int(sys.argv[i])
             arg_list.append(arg_val)
-        except (Exception):
+        except ValueError:
             print(f"Invalid parameter: '{sys.argv[i]}'")
         finally:
             i += 1
@@ -17,6 +17,7 @@ def main() -> None:
         print("No scores provided. Usage: python3 ft_score_analytics.py "
               "<score1> <score2> ...")
         return
+    print(f"Scores processed: {arg_list}")
     print(f"Total players: {len(arg_list)}")
     print(f"Total score: {sum(arg_list)}")
     print(f"Average score: {sum(arg_list) / len(arg_list)}")

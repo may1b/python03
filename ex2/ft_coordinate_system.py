@@ -1,14 +1,14 @@
 import math
 
 
-def get_player_pos():
+def get_player_pos() -> tuple[float, float, float]:
     while True:
         raw = input("Enter new coordinates as floats in format 'x,y,z': ")
         parts = raw.split(',')
         if len(parts) != 3:
             print("Invalid syntax")
             continue
-        coords = []
+        coords: list[float] = []
         for part in parts:
             try:
                 coords.append(float(part.strip()))
@@ -16,16 +16,14 @@ def get_player_pos():
                 print(f"Error on parameter '{part.strip()}': {e}")
                 break
         if len(coords) == 3:
-            return tuple(coords)
+            return (coords[0], coords[1], coords[2])
 
 
-def main():
+def main() -> None:
     print("=== Game Coordinate System ===")
 
     print("Get a first set of coordinates")
     pos1 = get_player_pos()
-    if pos1 is None:
-        return
     print(f"Got a first tuple: {pos1}")
     print(f"It includes: X={pos1[0]}, Y={pos1[1]}, Z={pos1[2]}")
     dist_center = math.sqrt(pos1[0]**2 + pos1[1]**2 + pos1[2]**2)
@@ -33,8 +31,6 @@ def main():
 
     print("Get a second set of coordinates")
     pos2 = get_player_pos()
-    if pos2 is None:
-        return
     dist = math.sqrt((pos2[0] - pos1[0])**2 +
                      (pos2[1] - pos1[1])**2 +
                      (pos2[2] - pos1[2])**2)

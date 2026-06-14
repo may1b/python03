@@ -1,19 +1,21 @@
 import random
 
-achievements = [
+ACHIEVEMENTS = [
     'Crafting Genius',   'World Savior',       'Master Explorer',
     'Collector Supreme', 'Untouchable',        'Boss Slayer',
     'Strategist',        'Unstoppable',        'Speed Runner',
     'Survivor',          'Treasure Hunter',    'First Steps',
     'Sharp Mind',        'Hidden Path Finder', 'Dragon Slayer',
     'Night Owl',         'Perfectionist',      'Legend',
-    'The Chosen One',    'Iron Will',
+    'The Chosen One',    'Iron Will',          'Puzzle Master',
+    'Team Player',       'Lucky Find',         'Marathon Gamer',
+    'Secret Keeper',
 ]
 
 
 def gen_player_achievements() -> set[str]:
-    count = random.randint(5, 12)
-    return set(random.sample(achievements, count))
+    count = random.randint(10, 12)
+    return set(random.sample(ACHIEVEMENTS, count))
 
 
 def main() -> None:
@@ -26,30 +28,26 @@ def main() -> None:
         'Dylan':   gen_player_achievements(),
     }
 
-    for name, achievements in players.items():
-        print(f"Player {name}: {achievements}")
-    common = set.intersection(*players.values())
-    print(f"Common achievements: {common}")
-
-    print()
-
+    for name, unlocked in players.items():
+        print(f"Player {name}: {unlocked}")
     all_achievements = set.union(*players.values())
     print(f"All distinct achievements: {all_achievements}")
 
-    for name, achievements in players.items():
+    common = set.intersection(*players.values())
+    print(f"Common achievements: {common}")
+
+    for name, unlocked in players.items():
         others_union = set.union(
             *(ach for pname, ach in players.items() if pname != name)
         )
-        unique = achievements.difference(others_union)
+        unique = unlocked.difference(others_union)
         print(f"Only {name} has: {unique}")
 
     print()
 
-    # --- Achievements a player still needs to complete the full list ---
-    # all_achievements is the union of what everyone actually unlocked,
-    # NOT the full ACHIEVEMENTS pool — matching the expected output.
-    for name, achievements in players.items():
-        missing = all_achievements.difference(achievements)
+    full_achievement_set = set(ACHIEVEMENTS)
+    for name, unlocked in players.items():
+        missing = full_achievement_set.difference(unlocked)
         print(f"{name} is missing: {missing}")
 
 
